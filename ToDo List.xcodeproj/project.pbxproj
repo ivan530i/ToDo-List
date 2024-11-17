@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2C399BF32CEA213C0045C127 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C399BED2CEA213C0045C127 /* MainViewController.swift */; };
+		2C399C042CEA237C0045C127 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C399C032CEA237C0045C127 /* TaskCell.swift */; };
+		2C399C062CEA23A80045C127 /* TaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C399C052CEA23A80045C127 /* TaskViewModel.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		2C399BB32CEA0D860045C127 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +33,9 @@
 		2C399B992CEA0D850045C127 /* ToDo List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C399BB22CEA0D860045C127 /* ToDo ListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ToDo ListTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C399BBC2CEA0D860045C127 /* ToDo ListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ToDo ListUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C399BED2CEA213C0045C127 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		2C399C032CEA237C0045C127 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
+		2C399C052CEA23A80045C127 /* TaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -56,6 +65,11 @@
 		2C399BBF2CEA0D860045C127 /* ToDo ListUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "ToDo ListUITests";
+			sourceTree = "<group>";
+		};
+		2C399C002CEA231D0045C127 /* Structures */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Structures;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -88,6 +102,8 @@
 		2C399B902CEA0D850045C127 = {
 			isa = PBXGroup;
 			children = (
+				2C399C002CEA231D0045C127 /* Structures */,
+				2C399BFF2CEA23000045C127 /* MainScreen */,
 				2C399B9B2CEA0D850045C127 /* ToDo List */,
 				2C399BB52CEA0D860045C127 /* ToDo ListTests */,
 				2C399BBF2CEA0D860045C127 /* ToDo ListUITests */,
@@ -103,6 +119,16 @@
 				2C399BBC2CEA0D860045C127 /* ToDo ListUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2C399BFF2CEA23000045C127 /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				2C399BED2CEA213C0045C127 /* MainViewController.swift */,
+				2C399C032CEA237C0045C127 /* TaskCell.swift */,
+				2C399C052CEA23A80045C127 /* TaskViewModel.swift */,
+			);
+			path = MainScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,6 +148,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				2C399B9B2CEA0D850045C127 /* ToDo List */,
+				2C399C002CEA231D0045C127 /* Structures */,
 			);
 			name = "ToDo List";
 			packageProductDependencies = (
@@ -249,6 +276,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C399C062CEA23A80045C127 /* TaskViewModel.swift in Sources */,
+				2C399BF32CEA213C0045C127 /* MainViewController.swift in Sources */,
+				2C399C042CEA237C0045C127 /* TaskCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
