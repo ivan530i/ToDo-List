@@ -49,6 +49,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		2C0B03572CEBB3BB00798C77 /* EditVC */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EditVC;
+			sourceTree = "<group>";
+		};
 		2C399B9B2CEA0D850045C127 /* ToDo List */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -102,6 +107,7 @@
 		2C399B902CEA0D850045C127 = {
 			isa = PBXGroup;
 			children = (
+				2C0B03572CEBB3BB00798C77 /* EditVC */,
 				2C399C002CEA231D0045C127 /* Structures */,
 				2C399BFF2CEA23000045C127 /* MainScreen */,
 				2C399B9B2CEA0D850045C127 /* ToDo List */,
@@ -147,6 +153,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				2C0B03572CEBB3BB00798C77 /* EditVC */,
 				2C399B9B2CEA0D850045C127 /* ToDo List */,
 				2C399C002CEA231D0045C127 /* Structures */,
 			);

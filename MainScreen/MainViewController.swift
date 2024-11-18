@@ -1,6 +1,6 @@
 import UIKit
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController, UISearchBarDelegate {
     private let viewModel = TaskViewModel()
     
     private let searchBar: UISearchBar = {
@@ -11,7 +11,6 @@ class MainViewController: UIViewController {
         searchBar.backgroundImage = UIImage()
         searchBar.backgroundColor = .clear
         
-        // Настройка текстового поля
         let textField = searchBar.searchTextField
         textField.textColor = .white
         textField.tintColor = .white
@@ -19,14 +18,12 @@ class MainViewController: UIViewController {
         textField.layer.cornerRadius = 10
         textField.layer.masksToBounds = true
         
-        // Настройка цвета placeholder
-        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white] // Цвет текста
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         textField.attributedPlaceholder = NSAttributedString(string: "Search", attributes: attributes)
         
-        // Настройка лупы (иконки внутри текстового поля)
         if let leftIconView = textField.leftView as? UIImageView {
-            leftIconView.image = leftIconView.image?.withRenderingMode(.alwaysTemplate) // Делаем лупу редактируемой
-            leftIconView.tintColor = .white // Устанавливаем белый цвет для лупы
+            leftIconView.image = leftIconView.image?.withRenderingMode(.alwaysTemplate)
+            leftIconView.tintColor = .white
         }
         return searchBar
     }()
@@ -71,11 +68,9 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Установка тайтла
         title = "Задачи"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        // Настройка внешнего вида navigationBar
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         appearance.largeTitleTextAttributes = [
@@ -83,7 +78,6 @@ class MainViewController: UIViewController {
             .font: UIFont.systemFont(ofSize: 34, weight: .bold)
         ]
         
-        // Устанавливаем отступ для largeTitle
         appearance.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 10)
         
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
@@ -93,6 +87,7 @@ class MainViewController: UIViewController {
         tableView.estimatedRowHeight = 106
         
         view.backgroundColor = .black
+        searchBar.delegate = self
         setupLayout()
         setupTableView()
         loadTasks()
@@ -100,7 +95,6 @@ class MainViewController: UIViewController {
     
     
     private func setupLayout() {
-        // Добавляем все элементы на экран
         view.addSubview(searchBar)
         view.addSubview(tableView)
         view.addSubview(homeBarBackgroundView)
@@ -108,7 +102,6 @@ class MainViewController: UIViewController {
         footerView.addSubview(tasksCountLabel)
         footerView.addSubview(addTaskButton)
         
-        // Отключаем автогенерацию ограничений
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         footerView.translatesAutoresizingMaskIntoConstraints = false
@@ -116,7 +109,6 @@ class MainViewController: UIViewController {
         addTaskButton.translatesAutoresizingMaskIntoConstraints = false
         homeBarBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         
-        // Задаем ограничения
         NSLayoutConstraint.activate([
             // Поисковая строка
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -8),
@@ -160,27 +152,46 @@ class MainViewController: UIViewController {
             self?.tableView.reloadData()
         }
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.filterTasks(with: searchText)
+        tableView.reloadData()
+    }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.tasks.count
+        return viewModel.filteredTasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TaskCell.identifier, for: indexPath) as? TaskCell else {
             return UITableViewCell()
         }
-        let task = viewModel.tasks[indexPath.row]
+        let task = viewModel.filteredTasks[indexPath.row]
         cell.configure(with: task)
         
-        // Обрабатываем изменение статуса задачи
         cell.onStatusToggle = { [weak self] updatedTask in
             guard let self = self else { return }
+            
             self.viewModel.updateTask(updatedTask)
             
             cell.configure(with: updatedTask)
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let task = viewModel.filteredTasks[indexPath.row]
+        let editVC = EditTaskViewController()
+        editVC.task = task
+        
+        editVC.onSave = { [weak self] updatedTask in
+            guard let self = self else { return }
+            self.viewModel.updateTask(updatedTask)
+            self.tableView.reloadData()
+        }
+        
+        navigationController?.pushViewController(editVC, animated: true)
     }
 }

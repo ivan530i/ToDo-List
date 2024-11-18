@@ -1,6 +1,6 @@
 import UIKit
 
-class TaskCell: UITableViewCell {
+final class TaskCell: UITableViewCell {
     static let identifier = "TaskCell"
     
     private let statusButton: UIButton = {
@@ -84,18 +84,17 @@ class TaskCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        // Сброс изображения кнопки
         statusButton.setImage(nil, for: .normal)
         
-        // Сброс текста и атрибутов
         titleLabel.text = nil
         titleLabel.attributedText = nil
         titleLabel.textColor = .white
+        
         descriptionLabel.text = nil
         descriptionLabel.textColor = .white
+        
         dateLabel.text = nil
         
-        // Сброс модели задачи
         task = nil
     }
     
@@ -104,15 +103,10 @@ class TaskCell: UITableViewCell {
         descriptionLabel.text = task.description
         dateLabel.text = task.date
         
-        // Устанавливаем изображение для кнопки
         let imageName = task.isCompleted ? "done_icon" : "not_done_icon"
         statusButton.setImage(UIImage(named: imageName), for: .normal)
         
         if task.isCompleted {
-            // Задача выполнена: серый текст с зачёркиванием
-            titleLabel.textColor = .darkGray
-            descriptionLabel.textColor = .darkGray
-            
             let attributedText = NSAttributedString(
                 string: task.title,
                 attributes: [
@@ -121,25 +115,22 @@ class TaskCell: UITableViewCell {
                 ]
             )
             titleLabel.attributedText = attributedText
+            titleLabel.textColor = .darkGray
+            descriptionLabel.textColor = .darkGray
         } else {
-            // Задача не выполнена: белый текст, без зачёркивания
-            titleLabel.textColor = .white
-            descriptionLabel.textColor = .white
-            
-            // Сброс атрибутов текста
             titleLabel.attributedText = nil
             titleLabel.text = task.title
+            titleLabel.textColor = .white
+            descriptionLabel.textColor = .white
         }
     }
     
     @objc private func statusButtonTapped() {
         guard var task = task else { return }
-        task.isCompleted.toggle() // Переключаем статус задачи
+        task.isCompleted.toggle()
         
-        // Уведомляем ViewModel через замыкание
         onStatusToggle?(task)
         
-        // Обновляем интерфейс ячейки
         configure(with: task)
     }
 }
